@@ -1,3 +1,12 @@
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 import { examplePosts } from './stats.js';
 export function initFeed() {
   const container = document.getElementById('x-feed');
@@ -10,7 +19,7 @@ export function initFeed() {
     posts.forEach(post => {
       const card = document.createElement('div');
       card.className = 'bg-zinc-900 border border-white/10 rounded-2xl p-4 text-sm';
-      card.innerHTML = `<div class="flex justify-between items-start mb-2"><div class="font-semibold text-amber-400">${post.user}</div><div class="text-[10px] text-zinc-500">${post.date} • ${post.likes} likes</div></div><p class="text-zinc-200 mb-2">${post.text}</p><div class="text-[10px] text-emerald-400 font-medium">${post.highlight}</div>`;
+      card.innerHTML = `<div class="flex justify-between items-start mb-2"><div class="font-semibold text-amber-400">${escapeHtml(post.user)}</div><div class="text-[10px] text-zinc-500">${escapeHtml(post.date)} • ${escapeHtml(String(post.likes))} likes</div></div><p class="text-zinc-200 mb-2">${escapeHtml(post.text)}</p><div class="text-[10px] text-emerald-400 font-medium">${escapeHtml(post.highlight)}</div>`;
       container.appendChild(card);
     });
   }

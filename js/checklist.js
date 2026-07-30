@@ -1,3 +1,12 @@
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 const tips = [
   { id: 'safety-first', label: 'Safety > Streak — always intervene if it feels wrong (gamification warning from X users)', checked: false },
   { id: 'parking', label: 'Take over early in parking lots, garages, and Superchargers', checked: true },
@@ -18,7 +27,7 @@ export function initChecklist() {
     tips.forEach((tip, i) => {
       const div = document.createElement('label');
       div.className = 'flex items-start gap-3 p-3 bg-zinc-900 rounded-xl cursor-pointer hover:bg-zinc-800 transition';
-      div.innerHTML = `<input type="checkbox" class="mt-1 accent-red-500" ${tip.checked ? 'checked' : ''}><span class="text-sm">${tip.label}</span>`;
+      div.innerHTML = `<input type="checkbox" class="mt-1 accent-red-500" ${tip.checked ? 'checked' : ''}><span class="text-sm">${escapeHtml(tip.label)}</span>`;
       const input = div.querySelector('input');
       input.addEventListener('change', () => { tips[i].checked = input.checked; save(); updateProgress(); });
       container.appendChild(div);
